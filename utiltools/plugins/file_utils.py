@@ -176,8 +176,8 @@ class DuplicateFinderPlugin(Plugin):
         for file_path in Path(path).glob(search_pattern):
             if file_path.is_file():
                 try:
-                    # Calculate file hash
-                    hasher = hashlib.md5()
+                    # Calculate file hash using SHA-256 for better collision resistance
+                    hasher = hashlib.sha256()
                     with open(file_path, 'rb') as f:
                         for chunk in iter(lambda: f.read(4096), b""):
                             hasher.update(chunk)

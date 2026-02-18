@@ -77,7 +77,7 @@ class URLValidatorPlugin(Plugin):
                     response = requests.head(url, timeout=5, allow_redirects=True)
                     result["reachable"] = response.status_code < 400
                     result["status_code"] = response.status_code
-                except:
+                except requests.RequestException:
                     result["reachable"] = False
             
             return result
@@ -122,7 +122,7 @@ class HTTPRequestPlugin(Plugin):
                 "content_length": len(response.content),
                 "encoding": response.encoding
             }
-        except Exception as e:
+        except requests.RequestException as e:
             return {
                 "success": False,
                 "error": str(e)
@@ -168,7 +168,7 @@ class DownloadManagerPlugin(Plugin):
                 "size": downloaded,
                 "url": url
             }
-        except Exception as e:
+        except requests.RequestException as e:
             return {
                 "success": False,
                 "error": str(e)

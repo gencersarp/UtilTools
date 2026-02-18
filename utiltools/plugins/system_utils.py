@@ -181,9 +181,9 @@ class DiskAnalyzerPlugin(Plugin):
                                 "size": size,
                                 "modified": datetime.fromtimestamp(file_path.stat().st_mtime).isoformat()
                             })
-                    except:
+                    except (OSError, PermissionError):
                         pass
-        except PermissionError:
+        except (OSError, PermissionError):
             pass
         
         large_files.sort(key=lambda x: x['size'], reverse=True)
@@ -251,7 +251,7 @@ class NetworkMonitorPlugin(Plugin):
                     "status": conn.status,
                     "pid": conn.pid
                 })
-            except:
+            except (psutil.Error, AttributeError):
                 pass
         
         return connections[:limit]

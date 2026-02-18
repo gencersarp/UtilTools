@@ -12,7 +12,14 @@ from ..core import Plugin, register_plugin, get_plugin_manager
 
 @register_plugin(category="automation")
 class TaskSchedulerPlugin(Plugin):
-    """Schedule tasks to run automatically"""
+    """
+    Schedule tasks to run automatically
+    
+    Note: This uses the 'schedule' library for in-process scheduling, 
+    suitable for development and simple use cases. For production systems 
+    requiring persistent scheduled tasks across restarts, consider using 
+    system schedulers like cron (Linux/macOS) or Task Scheduler (Windows).
+    """
     
     def __init__(self):
         super().__init__()
