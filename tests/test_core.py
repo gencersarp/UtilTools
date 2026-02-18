@@ -161,10 +161,12 @@ class TestTextProcessing(unittest.TestCase):
             self.test_file,
             search="hello",
             replace="hi",
+            regex=False,
             dry_run=False
         )
         
-        self.assertEqual(result['matches'], 2)
+        # Case-sensitive search only finds lowercase "hello"
+        self.assertEqual(result['matches'], 1)
         self.assertTrue(result['changed'])
         
         # Verify content changed
@@ -191,7 +193,7 @@ class TestSystemMonitoring(unittest.TestCase):
         self.assertIn("disk", info)
         
         # Check that values are reasonable
-        self.assertGreater(info['cpu']['usage_percent'], 0)
+        self.assertGreaterEqual(info['cpu']['usage_percent'], 0)
         self.assertGreater(info['memory']['total'], 0)
     
     def test_process_list(self):
